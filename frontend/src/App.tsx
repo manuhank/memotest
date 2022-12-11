@@ -1,36 +1,25 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import Card from "./components/card/card";
-
-class CardState {
-  url: string;
-  hidden: boolean;
-  constructor(url) {
-    this.url = url;
-    this.hidden = true;
-  }
-}
+import useMemoTest from "./hooks/useMemoTest";
 
 function App() {
-  const [cards, setCards] = useState([new CardState("url")]);
-  
-  const changeVisibility = (index: number) => {
-    const newState = [...cards];
-    newState[index] = { ...newState[index], hidden: !newState[index].hidden };
-    setCards(newState);
-  };
-  
+  const { cards, onCardClick } = useMemoTest();
   return (
     <div className="App">
-      {cards.map(({ url, hidden }, index) => (
-        <Card
-          key={index + url}
-          id={index}
-          imgSrc={url}
-          onClick={() => changeVisibility(index)}
-          hidden={hidden}
-        />
-      ))}
+      {cards ? (
+        cards.map(({ url, hidden }, index) => (
+          <Card
+            key={index + url}
+            id={index}
+            imgSrc={url}
+            onClick={() => onCardClick(index)}
+            hidden={hidden}
+          />
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }
