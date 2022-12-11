@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { getImagesList } from "../helpers/api";
 import { CardState, revealedState } from "../types/states";
 
 const mockedData = new Array(4).fill(null).map((e, i) => i.toString());
@@ -27,10 +28,12 @@ export default function useMemoTest() {
   };
 
   const loadGame = () => {
-    const initialState = [...mockedData, ...mockedData]
-      .map((val) => new CardState(val))
-      .sort(() => (Math.random() <= 0.5 ? -1 : 1));
-    setCards(initialState);
+    getImagesList(4).then((data) => {
+      const initialState = [...data, ...data]
+        .map((val) => new CardState(val))
+        .sort(() => (Math.random() <= 0.5 ? -1 : 1));
+      setCards(initialState);
+    });
   };
 
   const onCardClick = (index: number) => {

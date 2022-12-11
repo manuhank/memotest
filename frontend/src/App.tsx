@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import "./App.css";
+import "./App.scss";
 import Card from "./components/card/card";
 import useMemoTest from "./hooks/useMemoTest";
 
