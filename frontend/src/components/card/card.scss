@@ -1,7 +1,9 @@
 .Card {
-    height: 95px;
-    width: 80px;
+    height: 200px;
+    width: 160px;
     border-radius: 10px;
     background-color: red;
     margin: 1em;
+    box-shadow: 4px 4px 10px rgba(0,0,0,.3);
+    border: 10px solid white; 
 }
