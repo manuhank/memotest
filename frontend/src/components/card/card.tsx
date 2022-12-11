@@ -9,7 +9,7 @@ type cardProps = {
 function Card({ id, imgSrc, onClick= ()=>{}, hidden }: cardProps) {
   return (
     <div
-      onClick={onClick}
+      onClick={()=>hidden && onClick()}
       className={`Card ${hidden ? "hidden" : ""}`}
     >
       {/* TODO: switch to img */}
