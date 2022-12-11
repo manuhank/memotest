@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Card from "./components/card/card";
+
+class CardState {
+  url: string;
+  hidden: boolean;
+  constructor(url) {
+    this.url = url;
+    this.hidden = true;
+  }
+}
 
 function App() {
+  const [cards, setCards] = useState([new CardState("url")]);
+  
+  const changeVisibility = (index: number) => {
+    const newState = [...cards];
+    newState[index] = { ...newState[index], hidden: !newState[index].hidden };
+    setCards(newState);
+  };
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {cards.map(({ url, hidden }, index) => (
+        <Card
+          key={index + url}
+          id={index}
+          imgSrc={url}
+          onClick={() => changeVisibility(index)}
+          hidden={hidden}
+        />
+      ))}
     </div>
   );
 }
