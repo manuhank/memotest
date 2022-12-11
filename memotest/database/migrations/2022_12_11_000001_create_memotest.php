@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('memotests', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('url');
+            $table->json('urls');
         });
     }
 
