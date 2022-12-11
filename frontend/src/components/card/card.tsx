@@ -13,7 +13,8 @@ function Card({ id, imgSrc, onClick= ()=>{}, hidden }: cardProps) {
       className={`Card ${hidden ? "hidden" : ""}`}
     >
       {/* TODO: switch to img */}
-      {!hidden && <img src={imgSrc}/>}
+      {/* {!hidden && <img src={imgSrc}/>} */}
+      {!hidden && imgSrc}
     </div>
   );
 }

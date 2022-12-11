@@ -9,6 +9,7 @@ export default function useMemoTest() {
   const [lastCardsRevealed, setLastCardsRevealed] = useState<revealedState>([]);
   const [solvedCards, setSolvedCards] = useState<number>(0);
   const mismatchTimeout = useRef<NodeJS.Timeout>();
+  const attempts = useRef<number>(0);
 
   const changeVisibility = (index: number) => {
     const newState = [...cards];
@@ -43,15 +44,17 @@ export default function useMemoTest() {
     } else if (!lastCardsRevealed.length) {
       changeVisibility(index);
       setLastCardsRevealed([index]);
+      attempts.current++;
     } else {
       changeVisibility(index);
       if (cards[lastCardsRevealed[0]].url === cards[index].url) {
-        setSolvedCards(solvedCards + 2);
+        const currentSolvedCards = solvedCards + 2;
+        setSolvedCards(currentSolvedCards);
         setLastCardsRevealed([]);
+        if(cards.length === currentSolvedCards) console.log("ganaste en", attempts.current)
       } else {
         setLastCardsRevealed([...(lastCardsRevealed as [number]), index]);
         mismatchTimeout.current = setTimeout(hideRevealedCards, 2000);
-        console.log(typeof mismatchTimeout.current);
       }
     }
   };
