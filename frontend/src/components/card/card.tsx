@@ -1,20 +1,17 @@
 import "./card.scss";
 type cardProps = {
-  id: number;
   imgSrc: string;
   onClick: () => void;
   hidden: boolean;
 };
 
-function Card({ id, imgSrc, onClick= ()=>{}, hidden }: cardProps) {
+function Card({ imgSrc, onClick= ()=>{}, hidden }: cardProps) {
   return (
     <div
       onClick={()=>hidden && onClick()}
       className={`Card ${hidden ? "hidden" : ""}`}
     >
-      {/* TODO: switch to img */}
-      {/* {!hidden && <img src={imgSrc}/>} */}
-      {!hidden && imgSrc}
+      {!hidden && <img src={imgSrc}/>}
     </div>
   );
 }

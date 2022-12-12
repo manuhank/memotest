@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { CardState, revealedState } from "../types/states";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_MEMOTESTS } from "../graphql/queries";
+import { GET_MEMOTEST_BY_ID } from "../graphql/queries";
 
-export default function useMemoTest() {
+export default function useMemoTest(id) {
   const [cards, setCards] = useState<CardState[]>();
   const [lastCardsRevealed, setLastCardsRevealed] = useState<revealedState>([]);
   const [solvedCards, setSolvedCards] = useState<number>(0);
   const mismatchTimeout = useRef<NodeJS.Timeout>();
   const attempts = useRef<number>(0);
-  const { data, loading, error } = useQuery(GET_ALL_MEMOTESTS);
+  const { data, loading, error } = useQuery(GET_MEMOTEST_BY_ID(id));
 
   const changeVisibility = (index: number) => {
     const newState = [...cards];
@@ -30,11 +30,11 @@ export default function useMemoTest() {
 
   const loadGame = () => {
     if(loading) return;
-    const initialState = [...data, ...data]
+    const images = JSON.parse(data.memotest.urls)
+    const initialState = [...images, ...images]
       .map((val) => new CardState(val))
       .sort(() => (Math.random() <= 0.5 ? -1 : 1));
     setCards(initialState);
-    console.log("data", data)
   };
 
   const onCardClick = (index: number) => {
