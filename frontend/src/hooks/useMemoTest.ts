@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { CardState, revealedState } from "../types/states";
+import { CardState, revealedState } from "../types/states.types";
 import { useQuery } from "@apollo/client";
 import { GET_MEMOTEST_BY_ID } from "../graphql/queries";
 

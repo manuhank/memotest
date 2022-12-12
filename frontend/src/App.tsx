@@ -1,22 +1,17 @@
+import { useState } from "react";
 import "./App.scss";
-import Card from "./components/card/card";
-import useMemoTest from "./hooks/useMemoTest";
+import { MemotestId } from "./types/game.types";
+import { Game } from "./views/game/game";
+import { GameSelection } from "./views/gameSelection/gameSelection";
 
 function App() {
-  const { cards, onCardClick } = useMemoTest(1);
+  const [selectedGame, setSelectedGame] = useState<MemotestId>();
   return (
     <div className="App">
-      {cards ? (
-        cards.map(({ url, hidden }, index) => (
-          <Card
-            key={index + url}
-            imgSrc={url}
-            onClick={() => onCardClick(index)}
-            hidden={hidden}
-          />
-        ))
+      {selectedGame !== undefined ? (
+        <Game id={selectedGame} />
       ) : (
-        <p>Loading...</p>
+        <GameSelection onSelection={setSelectedGame} />
       )}
     </div>
   );
