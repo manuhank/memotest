@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { getImagesList } from "../helpers/api";
 import { CardState, revealedState } from "../types/states";
-
-const mockedData = new Array(4).fill(null).map((e, i) => i.toString());
+import { useQuery } from "@apollo/client";
+import { GET_ALL_MEMOTESTS } from "../graphql/queries";
 
 export default function useMemoTest() {
   const [cards, setCards] = useState<CardState[]>();
@@ -10,6 +9,7 @@ export default function useMemoTest() {
   const [solvedCards, setSolvedCards] = useState<number>(0);
   const mismatchTimeout = useRef<NodeJS.Timeout>();
   const attempts = useRef<number>(0);
+  const { data, loading, error } = useQuery(GET_ALL_MEMOTESTS);
 
   const changeVisibility = (index: number) => {
     const newState = [...cards];
@@ -29,12 +29,12 @@ export default function useMemoTest() {
   };
 
   const loadGame = () => {
-    getImagesList(4).then((data) => {
-      const initialState = [...data, ...data]
-        .map((val) => new CardState(val))
-        .sort(() => (Math.random() <= 0.5 ? -1 : 1));
-      setCards(initialState);
-    });
+    if(loading) return;
+    const initialState = [...data, ...data]
+      .map((val) => new CardState(val))
+      .sort(() => (Math.random() <= 0.5 ? -1 : 1));
+    setCards(initialState);
+    console.log("data", data)
   };
 
   const onCardClick = (index: number) => {
@@ -51,7 +51,8 @@ export default function useMemoTest() {
         const currentSolvedCards = solvedCards + 2;
         setSolvedCards(currentSolvedCards);
         setLastCardsRevealed([]);
-        if(cards.length === currentSolvedCards) console.log("ganaste en", attempts.current)
+        if (cards.length === currentSolvedCards)
+          console.log("ganaste en", attempts.current);
       } else {
         setLastCardsRevealed([...(lastCardsRevealed as [number]), index]);
         mismatchTimeout.current = setTimeout(hideRevealedCards, 2000);
@@ -59,7 +60,7 @@ export default function useMemoTest() {
     }
   };
 
-  useEffect(loadGame, []);
+  useEffect(loadGame, [loading, data]);
 
   return { cards, onCardClick };
 }

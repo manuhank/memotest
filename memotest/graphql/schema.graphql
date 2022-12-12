@@ -44,4 +44,5 @@ type User {
 
 type Memotest {
     name: String
+    urls: String
 }
