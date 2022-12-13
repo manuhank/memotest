@@ -40,22 +40,28 @@ export default function useMemoTest(id) {
 
   const onCardClick = (index: number) => {
     if (mismatchTimeout.current !== undefined) {
+      //user clicked just after two different cards are revealed
       clearTimeout(mismatchTimeout.current);
       hideRevealedCards();
     } else if (!lastCardsRevealed.length) {
+      //clicked on the first card of the pair
       changeVisibility(index);
       setLastCardsRevealed([index]);
       attempts.current++;
     } else {
+      //clicked on the second card of the pair
       changeVisibility(index);
       if (cards[lastCardsRevealed[0]].url === cards[index].url) {
+        //if the second card is the same image as the first one
         const currentSolvedCards = solvedCards + 2;
         setSolvedCards(currentSolvedCards);
         setLastCardsRevealed([]);
         if (cards.length === currentSolvedCards)
+          //if all cards have been matched
           setScore(Math.round((cards.length / attempts.current) * 100));
         console.log("ganaste en", attempts.current);
       } else {
+        //if both cards are different
         setLastCardsRevealed([...(lastCardsRevealed as [number]), index]);
         mismatchTimeout.current = setTimeout(hideRevealedCards, 2000);
       }
