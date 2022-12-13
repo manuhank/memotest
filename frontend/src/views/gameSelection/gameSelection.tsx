@@ -35,14 +35,14 @@ export function GameSelection({ onSelection }: GameSelectionProps) {
               disabled={page <= 1}
               onClick={() => setPage(page - 1)}
             >
-              Previous
+              {"<"}
             </button>
             <button
               type="button"
               disabled={!data.memotests.paginatorInfo.hasMorePages}
               onClick={() => setPage(page + 1)}
             >
-              Next
+              {">"}
             </button>
           </div>
         </>

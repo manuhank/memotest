@@ -10,7 +10,7 @@ type GameProps = {
 };
 
 export function Game({ id, onFinnish }: GameProps) {
-  const { cards, onCardClick, score } = useMemoTest(id);
+  const { name, cards, onCardClick, score } = useMemoTest(id);
   return (
     <div className="Game">
       {score !== undefined && (
@@ -25,15 +25,25 @@ export function Game({ id, onFinnish }: GameProps) {
         </Modal>
       )}
       {cards ? (
-        cards.map(({ url, hidden }, index) => (
-          <Card
-            key={index + url}
-            number={index + 1}
-            imgSrc={url}
-            onClick={() => onCardClick(index)}
-            hidden={hidden}
-          />
-        ))
+        <>
+          <nav>
+            <button type="button" onClick={onFinnish}>
+              {"<"}
+            </button>
+            <h1>{name}</h1>
+          </nav>
+          <div className="cardsContainer">
+            {cards.map(({ url, hidden }, index) => (
+              <Card
+                key={index + url}
+                number={index + 1}
+                imgSrc={url}
+                onClick={() => onCardClick(index)}
+                hidden={hidden}
+              />
+            ))}
+          </div>
+        </>
       ) : (
         <p>Loading...</p>
       )}

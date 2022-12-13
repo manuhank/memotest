@@ -58,7 +58,10 @@ export default function useMemoTest(id) {
         setLastCardsRevealed([]);
         if (cards.length === currentSolvedCards)
           //if all cards have been matched
-          setScore(Math.round((cards.length / attempts.current) * 100));
+          setTimeout(
+            () => setScore(Math.round((cards.length / attempts.current) * 100)),
+            1000
+          );
         console.log("ganaste en", attempts.current);
       } else {
         //if both cards are different
@@ -70,5 +73,11 @@ export default function useMemoTest(id) {
 
   useEffect(loadGame, [loading, data]);
 
-  return { cards, onCardClick, score, loadingError: error };
+  return {
+    name: data?.memotest.name,
+    cards,
+    onCardClick,
+    score,
+    loadingError: error,
+  };
 }
