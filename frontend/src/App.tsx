@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       {selectedGame !== undefined ? (
-        <Game id={selectedGame} />
+        <Game id={selectedGame} onFinnish={()=>setSelectedGame(undefined)}/>
       ) : (
         <GameSelection onSelection={setSelectedGame} />
       )}

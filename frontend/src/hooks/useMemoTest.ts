@@ -7,6 +7,7 @@ export default function useMemoTest(id) {
   const [cards, setCards] = useState<CardState[]>();
   const [lastCardsRevealed, setLastCardsRevealed] = useState<revealedState>([]);
   const [solvedCards, setSolvedCards] = useState<number>(0);
+  const [score, setScore] = useState<number>();
   const mismatchTimeout = useRef<NodeJS.Timeout>();
   const attempts = useRef<number>(0);
   const { data, loading, error } = useQuery(GET_MEMOTEST_BY_ID(id));
@@ -29,8 +30,8 @@ export default function useMemoTest(id) {
   };
 
   const loadGame = () => {
-    if(loading) return;
-    const images = JSON.parse(data.memotest.urls)
+    if (loading) return;
+    const images = JSON.parse(data.memotest.urls);
     const initialState = [...images, ...images]
       .map((val) => new CardState(val))
       .sort(() => (Math.random() <= 0.5 ? -1 : 1));
@@ -52,7 +53,8 @@ export default function useMemoTest(id) {
         setSolvedCards(currentSolvedCards);
         setLastCardsRevealed([]);
         if (cards.length === currentSolvedCards)
-          console.log("ganaste en", attempts.current);
+          setScore(Math.round((cards.length / attempts.current) * 100));
+        console.log("ganaste en", attempts.current);
       } else {
         setLastCardsRevealed([...(lastCardsRevealed as [number]), index]);
         mismatchTimeout.current = setTimeout(hideRevealedCards, 2000);
@@ -62,5 +64,5 @@ export default function useMemoTest(id) {
 
   useEffect(loadGame, [loading, data]);
 
-  return { cards, onCardClick };
+  return { cards, onCardClick, score, loadingError: error };
 }

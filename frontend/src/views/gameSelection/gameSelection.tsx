@@ -11,14 +11,22 @@ type GameSelectionProps = {
 export function GameSelection({ onSelection }: GameSelectionProps) {
   const { data, loading, error } = useQuery(GET_ALL_MEMOTESTS());
   return (
-    <div className="Game">
+    <div className="GameSelection">
       {loading ? (
         <p>Loading...</p>
       ) : (
         <>
-          {data.memotests.map(({ id, name, urls }) => (
-            <GameButton key={id} name={name} onClick={() => onSelection(id)} images={JSON.parse(urls)}/>
-          ))}
+          <h1>Choose your game:</h1>
+          <div className="games">
+            {data.memotests.map(({ id, name, urls }) => (
+              <GameButton
+                key={id}
+                name={name}
+                onClick={() => onSelection(id)}
+                images={JSON.parse(urls)}
+              />
+            ))}
+          </div>
         </>
       )}
     </div>

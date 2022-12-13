@@ -1,11 +1,12 @@
 import "./card.scss";
 type cardProps = {
+  number: number;
   imgSrc: string;
   onClick: () => void;
   hidden: boolean;
 };
 
-function Card({ imgSrc, onClick = () => {}, hidden }: cardProps) {
+function Card({ number, imgSrc, onClick = () => {}, hidden }: cardProps) {
   return (
     <div
       onClick={() => hidden && onClick()}
@@ -15,7 +16,9 @@ function Card({ imgSrc, onClick = () => {}, hidden }: cardProps) {
         <div className="image">
           <img src={imgSrc} />
         </div>
-        <div className="background"></div>
+        <div className="background">
+          <span>{number}</span>
+        </div>
       </div>
     </div>
   );

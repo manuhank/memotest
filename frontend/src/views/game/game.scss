@@ -1,4 +1,7 @@
 .Game {
   display: flex;
   flex-wrap: wrap;
+  .Modal .children{
+    p{}
+  }
 }

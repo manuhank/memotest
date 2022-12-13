@@ -1,0 +1,35 @@
+.Modal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  .content{
+    background-color: white;
+    width: 400px;
+    max-width: 90vw;
+    min-height: 300px;
+    box-shadow: 4px 4px 15px rgba(0,0,0,.2);
+    border-radius: 20px;
+    .title{
+      font-size: larger;
+      font-weight: 800;
+      text-align: center;
+    }
+    .children{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .actions{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+  }
+}
