@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Memotest extends Model
 {
     use HasFactory;
+
+        /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    protected $fillable = [
+        'name', 'urls' 
+    ]; 
+
+    protected $casts = [
+        'urls' => 'array',
+    ];
 }

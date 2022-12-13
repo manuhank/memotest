@@ -23,7 +23,7 @@ export function GameSelection({ onSelection }: GameSelectionProps) {
                 key={id}
                 name={name}
                 onClick={() => onSelection(id)}
-                images={JSON.parse(urls)}
+                images={urls}
               />
             ))}
           </div>

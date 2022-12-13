@@ -31,7 +31,7 @@ export default function useMemoTest(id) {
 
   const loadGame = () => {
     if (loading) return;
-    const images = JSON.parse(data.memotest.urls);
+    const images = data.memotest.urls;
     const initialState = [...images, ...images]
       .map((val) => new CardState(val))
       .sort(() => (Math.random() <= 0.5 ? -1 : 1));
