@@ -21,4 +21,5 @@ class Memotest extends Model
     protected $casts = [
         'urls' => 'array',
     ];
+    public $timestamps = false;
 }
