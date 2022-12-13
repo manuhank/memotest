@@ -15,7 +15,7 @@ type Query {
 
     memotest(id: ID @eq): Memotest @find
 
-    memotests: [Memotest!]! @all
+    memotests: [Memotest!]! @paginate
 }
 
 "Account of a person who utilizes this application."

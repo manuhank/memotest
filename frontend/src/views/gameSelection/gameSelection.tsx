@@ -3,13 +3,15 @@ import { MemotestId } from "../../types/game.types";
 import { GET_ALL_MEMOTESTS } from "../../graphql/queries";
 import { useQuery } from "@apollo/client";
 import GameButton from "../../components/gameButton/gameButton";
+import { useState } from "react";
 
 type GameSelectionProps = {
   onSelection: (id: MemotestId) => void;
 };
 
 export function GameSelection({ onSelection }: GameSelectionProps) {
-  const { data, loading, error } = useQuery(GET_ALL_MEMOTESTS());
+  const [page, setPage] = useState<number>(1);
+  const { data, loading, error } = useQuery(GET_ALL_MEMOTESTS(page));
   return (
     <div className="GameSelection">
       {loading ? (
@@ -18,7 +20,7 @@ export function GameSelection({ onSelection }: GameSelectionProps) {
         <>
           <h1>Choose your game:</h1>
           <div className="games">
-            {data.memotests.map(({ id, name, urls }) => (
+            {data.memotests.data.map(({ id, name, urls }) => (
               <GameButton
                 key={id}
                 name={name}
@@ -26,6 +28,22 @@ export function GameSelection({ onSelection }: GameSelectionProps) {
                 images={urls}
               />
             ))}
+          </div>
+          <div className="paginationBar">
+            <button
+              type="button"
+              disabled={page <= 1}
+              onClick={() => setPage(page - 1)}
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              disabled={!data.memotests.paginatorInfo.hasMorePages}
+              onClick={() => setPage(page + 1)}
+            >
+              Next
+            </button>
           </div>
         </>
       )}
