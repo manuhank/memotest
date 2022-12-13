@@ -10,6 +10,7 @@ type Query {
 
 type Mutation {
   createMemotest(name: String!, urls: [String]): Memotest! @create
+  deleteMemotest(id: ID!): Memotest! @delete
 }
 
 type Memotest {
