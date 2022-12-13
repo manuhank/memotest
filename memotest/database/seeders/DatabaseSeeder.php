@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             'urls' => json_encode([
                 "https://images.unsplash.com/photo-1610878180933-123728745d22?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FuYWRhJTIwbmF0dXJlfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
                 "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/nature-quotes-landscape-1648265299.jpg?crop=0.676xw:1.00xh;0.148xw,0&resize=640:*",
-                "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.undp.org%2Fchina%2Fblog%2Fwhy-humanity-must-save-nature-save-itself&psig=AOvVaw2dwJ_rgYQrkJ_zMEBM0xWv&ust=1671048473146000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCKDI7uay9_sCFQAAAAAdAAAAABAf",
+                "https://www.undp.org/sites/g/files/zskgke326/files/migration/cn/UNDP-CH-Why-Humanity-Must-Save-Nature-To-Save-Itself.jpeg",
                 "https://www.youandthemat.com/wp-content/uploads/nature-2-26-17.jpg"
             ]),
         ]);
