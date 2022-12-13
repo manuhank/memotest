@@ -5,13 +5,18 @@ type cardProps = {
   hidden: boolean;
 };
 
-function Card({ imgSrc, onClick= ()=>{}, hidden }: cardProps) {
+function Card({ imgSrc, onClick = () => {}, hidden }: cardProps) {
   return (
     <div
-      onClick={()=>hidden && onClick()}
+      onClick={() => hidden && onClick()}
       className={`Card ${hidden ? "hidden" : ""}`}
     >
-      {!hidden && <img src={imgSrc}/>}
+      <div className={`content ${hidden ? "hidden" : ""}`}>
+        <div className="image">
+          <img src={imgSrc} />
+        </div>
+        <div className="background"></div>
+      </div>
     </div>
   );
 }
