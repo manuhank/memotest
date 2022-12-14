@@ -20,7 +20,7 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->integer('retries')->unsigned()->default(0);
             $table->integer('numberOfPairs')->unsigned();
-            $table->boolean('state')->default(false);
+            $table->integer('state')->default(0);
         });
     }
 

@@ -1,7 +1,11 @@
+extend type Query {
+  session(id: ID!): Session @find
+}
+
 extend type Mutation {
   newSession(memotestId: String!, numberOfPairs: Int!): Session! @create
   updateSessionRetries(id: ID!, retries:Int!): Session! @update
-#   endSession(id: ID!): Session! @update @inject()
+  endSession(id: ID!): Session
 }
 
 type Session {
@@ -13,6 +17,6 @@ type Session {
 }
 
 enum SessionState {
-  STARTED @enum(value: false)
-  COMPLETED @enum(value: true)
+  STARTED @enum(value: 0)
+  COMPLETED @enum(value: 1)
 }
