@@ -4,23 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\DB;
 
-class Memotest extends Model
+class Session extends Model
 {
     use HasFactory;
-
-        /**
+    /**
      * Write code on Method
      *
      * @return response()
      */
     protected $fillable = [
-        'name' 
-    ];  
+        'retries',
+        'memotestId',
+        'state'
+    ];
     public $timestamps = false;
-
-    public function urls()
-    {
-        return $this->hasMany(Image::class)->pluck('url')->toArray();
-    }
+    
 }

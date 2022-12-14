@@ -11,6 +11,13 @@ type Query {
 type Mutation {
   createMemotest(name: String!): Memotest! @create
   deleteMemotest(id: ID!): Memotest! @delete
+
+  addImage(url: String!, memotestId: String!): Image! @create
+  deleteImage(id: ID!): Image! @delete
+
+  newSession(memotestId: String!, numberOfPairs: Int!): Session! @create
+  updateSessionRetries(id: ID!, retries:Int!): Session! @update
+  endSession(id: ID!): Session! @update
 }
 
 type Memotest {
@@ -20,5 +27,20 @@ type Memotest {
 }
 
 type Image {
+    id: ID!
     url: String
+    memotestId: String
+}
+
+type Session {
+    id: ID!
+    memotestId: String
+    retries: Int
+    numberOfPairs: Int
+    state: SessionState
+}
+
+enum SessionState {
+  STARTED @enum(value: false)
+  COMPLETED @enum(value: true)
 }
