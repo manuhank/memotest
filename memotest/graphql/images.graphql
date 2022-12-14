@@ -1,0 +1,11 @@
+extend type Mutation {
+  addImage(url: String!, memotestId: String!): Image! @create
+  deleteImage(id: ID!): Image! @delete
+}
+
+type Image {
+    id: ID!
+    url: String
+    memotestId: Memotest @belongsTo
+}
+

@@ -1,0 +1,18 @@
+extend type Mutation {
+  newSession(memotestId: String!, numberOfPairs: Int!): Session! @create
+  updateSessionRetries(id: ID!, retries:Int!): Session! @update
+#   endSession(id: ID!): Session! @update @inject()
+}
+
+type Session {
+    id: ID!
+    memotestId: String
+    retries: Int
+    numberOfPairs: Int
+    state: SessionState
+}
+
+enum SessionState {
+  STARTED @enum(value: false)
+  COMPLETED @enum(value: true)
+}
