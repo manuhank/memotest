@@ -6,7 +6,7 @@ export const GET_ALL_MEMOTESTS = (page) => gql`
     data {
       id
       name
-      urls {
+      images {
         url
       }
     }
@@ -21,7 +21,7 @@ export const GET_MEMOTEST_BY_ID = (id) => gql`
   {
     memotest(id:${id}) {
       name
-      urls {
+      images {
         url
       }
     }

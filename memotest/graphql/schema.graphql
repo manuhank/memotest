@@ -17,19 +17,19 @@ type Mutation {
 
   newSession(memotestId: String!, numberOfPairs: Int!): Session! @create
   updateSessionRetries(id: ID!, retries:Int!): Session! @update
-  endSession(id: ID!): Session! @update
+#   endSession(id: ID!): Session! @update @inject()
 }
 
 type Memotest {
     id: ID!
     name: String
-    urls: [Image]
+    images: [Image] @hasMany
 }
 
 type Image {
     id: ID!
     url: String
-    memotestId: String
+    memotestId: Memotest @belongsTo
 }
 
 type Session {

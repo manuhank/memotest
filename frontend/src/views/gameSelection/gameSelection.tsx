@@ -22,12 +22,12 @@ export function GameSelection({ onSelection }: GameSelectionProps) {
         <>
           <h1>Choose your game:</h1>
           <div className="games">
-            {data.memotests.data.map(({ id, name, urls }) => (
+            {data.memotests.data.map(({ id, name, images }) => (
               <GameButton
                 key={id}
                 name={name}
                 onClick={() => onSelection(id)}
-                images={urls}
+                images={images}
               />
             ))}
           </div>

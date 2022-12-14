@@ -19,8 +19,8 @@ class Memotest extends Model
     ];  
     public $timestamps = false;
 
-    public function urls()
+    public function images()
     {
-        return $this->hasMany(Image::class)->pluck('url')->toArray();
+        return $this->hasMany(Image::class);
     }
 }

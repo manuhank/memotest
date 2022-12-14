@@ -3,7 +3,7 @@ export type MemotestId = `${number}`;
 export type Memotest = {
     id: MemotestId;
     name: string;
-    urls: ImageURLS[];
+    images: ImageURLS[];
 }
 
 export type ImageURLS = {
