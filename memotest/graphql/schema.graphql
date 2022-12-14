@@ -9,12 +9,16 @@ type Query {
 }
 
 type Mutation {
-  createMemotest(name: String!, urls: [String] = []): Memotest! @create
+  createMemotest(name: String!): Memotest! @create
   deleteMemotest(id: ID!): Memotest! @delete
 }
 
 type Memotest {
     id: ID!
     name: String
-    urls: [String]
+    urls: [Image]
+}
+
+type Image {
+    url: String
 }

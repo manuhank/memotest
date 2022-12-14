@@ -15,11 +15,12 @@ class Memotest extends Model
      * @return response()
      */
     protected $fillable = [
-        'name', 'urls' 
-    ]; 
-
-    protected $casts = [
-        'urls' => 'array',
-    ];
+        'name' 
+    ];  
     public $timestamps = false;
+
+    public function urls()
+    {
+        return $this->hasMany(Image::class)->select('url');
+    }
 }
