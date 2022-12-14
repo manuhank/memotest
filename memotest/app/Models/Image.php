@@ -9,8 +9,9 @@ class Image extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'url' 
+        'url', "memotestId"
     ];
+    public $timestamps = false;
     public function memotest()
     {
         return $this->belongsTo(Memotest::class);

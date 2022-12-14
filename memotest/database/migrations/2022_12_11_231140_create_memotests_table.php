@@ -18,9 +18,9 @@ return new class extends Migration {
         });
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('url');
-            $table->bigInteger('memotest_id')->unsigned();
-            $table->foreign('memotest_id')->references('id')->on('memotests')
+            $table->string('url')->unique();
+            $table->bigInteger('memotestId')->unsigned();
+            $table->foreign('memotestId')->references('id')->on('memotests')
                 ->onDelete('cascade');
         });
     }
