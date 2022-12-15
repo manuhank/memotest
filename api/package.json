@@ -2,6 +2,8 @@
     "private": true,
     "scripts": {
         "start": "./vendor/bin/sail up",
+        "db:migrate": "docker exec -it $(docker ps -q -f name=laravel.test-1) php artisan migrate",
+        "db:seed": "docker exec -it $(docker ps -q -f name=laravel.test-1) php artisan db:seed",
         "dev": "vite",
         "build": "vite build"
     },
