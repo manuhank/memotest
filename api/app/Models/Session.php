@@ -18,6 +18,7 @@ class Session extends Model
     protected $fillable = [
         'retries',
         'memotestId',
+        'numberOfPairs',
         'state'
     ];
     public $timestamps = false;

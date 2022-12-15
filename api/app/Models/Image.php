@@ -14,6 +14,6 @@ class Image extends Model
     public $timestamps = false;
     public function memotest()
     {
-        return $this->belongsTo(Memotest::class);
+        return $this->belongsTo(Memotest::class, 'memotestId');
     }
 }
