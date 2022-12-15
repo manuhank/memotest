@@ -1,4 +1,4 @@
-import { ApolloCache, MutationTuple, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useEffect } from "react";
 import {
   CREATE_SESSION,

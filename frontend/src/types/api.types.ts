@@ -1,8 +1,6 @@
 import { ApolloError } from "@apollo/client";
 import { Memotest } from "./game.types";
 
-export type requestStatus = { loading: boolean; error?: ApolloError };
-
 export type getMemotestById = {
   memotest: Memotest;
 };
