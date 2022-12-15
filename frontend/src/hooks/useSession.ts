@@ -1,24 +1,23 @@
-import { useMutation } from "@apollo/client";
+import { ApolloCache, MutationTuple, useMutation } from "@apollo/client";
 import { useEffect } from "react";
 import {
   CREATE_SESSION,
   END_SESSION,
   UPDATE_SESSION_RETRIES,
 } from "../graphql/session.mutations";
+import { createSession } from "../types/api.types";
 
 export default function useSession(memotestId) {
   const [
     CreateSession,
     { data: createdSession, loading: isCreatingSession, error: creationError },
-  ] = useMutation(CREATE_SESSION);
+  ] = useMutation<createSession>(CREATE_SESSION);
   const [
     UpdateSessionRetries,
-    { data: updatedSession, loading: isUpdatingSession, error: updatedError },
+    { loading: isUpdatingSession, error: updatedError },
   ] = useMutation(UPDATE_SESSION_RETRIES);
-  const [
-    EndSession,
-    { data: endedSession, loading: isEndingSession, error: endedError },
-  ] = useMutation(END_SESSION);
+  const [EndSession, { loading: isEndingSession, error: endedError }] =
+    useMutation(END_SESSION);
 
   useEffect(() => {
     if (memotestId) CreateSession({ variables: { memotestId } });

@@ -10,7 +10,8 @@ type GameProps = {
 };
 
 export function Game({ id, onFinnish }: GameProps) {
-  const { name, cards, onCardClick, score } = useMemoTest(id);
+  const { name, cards, onCardClick, score, error } = useMemoTest(id);
+  if(error) throw new Error(error.message);
   return (
     <div className="Game">
       {score !== undefined && (
@@ -18,8 +19,6 @@ export function Game({ id, onFinnish }: GameProps) {
           <iframe
             src="https://giphy.com/embed/3o6fIUZTTDl0IDjbZS"
             frameBorder="0"
-            className="giphy-embed"
-            allowFullScreen
           ></iframe>
           <p>{`You scored: ${score} points`}</p>
         </Modal>

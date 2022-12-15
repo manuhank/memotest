@@ -12,8 +12,10 @@ type GameSelectionProps = {
 
 export function GameSelection({ onSelection }: GameSelectionProps) {
   const [page, setPage] = useState<number>(1);
-  const { data, loading }: { data: getAllMemotests; loading: boolean } =
-    useQuery(GET_ALL_MEMOTESTS(page));
+  const { data, loading, error } = useQuery<getAllMemotests>(
+    GET_ALL_MEMOTESTS(page)
+  );
+  if(error) throw new Error(error.message);
   return (
     <div className="GameSelection">
       {loading ? (

@@ -15,10 +15,9 @@ export default function useMemoTest(id) {
   const {
     data: memotestData,
     loading: loadingMemotest,
-  }: { data: getMemotestById; loading: boolean } = useQuery(
-    GET_MEMOTEST_BY_ID(id)
-  );
-  const { updateRetries, endSession } = useSession(id);
+    error: memotestError,
+  } = useQuery<getMemotestById>(GET_MEMOTEST_BY_ID(id));
+  const { updateRetries, endSession, error: sessionError } = useSession(id);
 
   const changeVisibility = (index: number) => {
     const newState = [...cards];
@@ -88,5 +87,6 @@ export default function useMemoTest(id) {
     cards,
     onCardClick,
     score,
+    error: memotestError || sessionError,
   };
 }
