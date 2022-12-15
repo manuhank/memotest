@@ -23,10 +23,10 @@
       backface-visibility: hidden;
       overflow: hidden;
       border: 10px solid black;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
       transition: box-shadow 0.23s;
       &:hover {
-        box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3);
+        box-shadow: 7px 7px 16px rgba(0, 0, 0, 0.6);
       }
     }
     .background {

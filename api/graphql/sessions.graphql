@@ -5,7 +5,7 @@ extend type Query {
 extend type Mutation {
   createSession(memotestId: String!): Session!
   updateSessionRetries(id: ID!, retries:Int!): Session! @update
-  endSession(id: ID!): Session
+  endSession(id: ID!, retries:Int!): Session
 }
 
 type Session {

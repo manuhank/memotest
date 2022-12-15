@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { CardState, revealedState } from "../types/states.types";
 import { useQuery } from "@apollo/client";
-import { GET_MEMOTEST_BY_ID } from "../graphql/queries";
+import { GET_MEMOTEST_BY_ID } from "../graphql/memotest.queries";
 import { getMemotestById } from "../types/api.types";
+import useSession from "./useSession";
 
 export default function useMemoTest(id) {
   const [cards, setCards] = useState<CardState[]>();
@@ -10,9 +11,14 @@ export default function useMemoTest(id) {
   const [solvedCards, setSolvedCards] = useState<number>(0);
   const [score, setScore] = useState<number>();
   const mismatchTimeout = useRef<NodeJS.Timeout>();
-  const attempts = useRef<number>(0);
-  const { data, loading }: { data: getMemotestById; loading: boolean } =
-    useQuery(GET_MEMOTEST_BY_ID(id));
+  const retries = useRef<number>(0);
+  const {
+    data: memotestData,
+    loading: loadingMemotest,
+  }: { data: getMemotestById; loading: boolean } = useQuery(
+    GET_MEMOTEST_BY_ID(id)
+  );
+  const { updateRetries, endSession } = useSession(id);
 
   const changeVisibility = (index: number) => {
     const newState = [...cards];
@@ -32,8 +38,8 @@ export default function useMemoTest(id) {
   };
 
   const loadGame = () => {
-    if (loading) return;
-    const images = data.memotest.images.map(({url})=>url);
+    if (loadingMemotest) return;
+    const images = memotestData.memotest.images.map(({ url }) => url);
     const initialState = [...images, ...images]
       .map((val) => new CardState(val))
       .sort(() => (Math.random() <= 0.5 ? -1 : 1));
@@ -49,7 +55,8 @@ export default function useMemoTest(id) {
       //clicked on the first card of the pair
       changeVisibility(index);
       setLastCardsRevealed([index]);
-      attempts.current++;
+      retries.current++;
+      updateRetries(retries.current);
     } else {
       //clicked on the second card of the pair
       changeVisibility(index);
@@ -58,13 +65,14 @@ export default function useMemoTest(id) {
         const currentSolvedCards = solvedCards + 2;
         setSolvedCards(currentSolvedCards);
         setLastCardsRevealed([]);
-        if (cards.length === currentSolvedCards)
+        if (cards.length === currentSolvedCards) {
           //if all cards have been matched
           setTimeout(
-            () => setScore(Math.round((cards.length / attempts.current) * 100)),
+            () => setScore(Math.round((cards.length / retries.current) * 100)),
             1000
           );
-        console.log("ganaste en", attempts.current);
+          endSession(retries.current);
+        }
       } else {
         //if both cards are different
         setLastCardsRevealed([...(lastCardsRevealed as [number]), index]);
@@ -73,10 +81,10 @@ export default function useMemoTest(id) {
     }
   };
 
-  useEffect(loadGame, [loading, data]);
+  useEffect(loadGame, [loadingMemotest, memotestData]);
 
   return {
-    name: data?.memotest.name,
+    name: memotestData?.memotest.name,
     cards,
     onCardClick,
     score,

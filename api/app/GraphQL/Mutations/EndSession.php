@@ -15,6 +15,7 @@ final class EndSession
         $session = Session::find($args['id']);
         if ($session) {
             $session->state = 1;
+            $session->retries = $args['retries'];
             $session->save();
         }
 

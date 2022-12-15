@@ -1,6 +1,6 @@
 import "./gameSelection.scss";
 import { MemotestId } from "../../types/game.types";
-import { GET_ALL_MEMOTESTS } from "../../graphql/queries";
+import { GET_ALL_MEMOTESTS } from "../../graphql/memotest.queries";
 import { useQuery } from "@apollo/client";
 import GameButton from "../../components/gameButton/gameButton";
 import { useState } from "react";
