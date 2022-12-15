@@ -1,5 +1,5 @@
 extend type Query {
-  session(id: ID!): Session @find
+  session(id: ID! @eq): Session @find
 }
 
 extend type Mutation {
