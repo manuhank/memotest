@@ -28,15 +28,15 @@ composer install
 cp .env.default .env 
 ```
 
-4. start docker containers:
+4. Start docker containers:
 `
 npm start
 `
-5. Migrate database:
+5. Create database and tables:
 `
 npm run db:migrate
 `
-6. Seed database:
+6. Populate the database with the initial data:
 `
 npm run db:seed
 `
