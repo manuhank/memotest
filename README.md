@@ -6,39 +6,41 @@ This package have two services:
  - api (a dockerized lighthouse-php server)
  - frontend (a react application)
 
-In order to run this application, you will need:
- - [docker-desktop](https://www.docker.com/products/docker-desktop/)
- - [node](https://nodejs.org/es/download/) 16 or greater
- - [php](https://www.php.net/downloads) 8.2
- - [composer](https://getcomposer.org/download/) 2.4
+In order to run this application, you will need [docker-desktop](https://www.docker.com/products/docker-desktop/)
 
 ## api setup
 1. Navigate to the api folder:
 `
 cd api
 `
-2. Install dependencies:
-`
-composer install
-`
 
-3. Set up environment variables by copy `.env.default` to `.env`:
+2. Set up environment variables by copy `.env.default` to `.env`:
 
 ```
 cp .env.default .env 
 ```
 
+3. Install dependencies:
+`
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    laravelsail/php81-composer:latest \
+    composer install --ignore-platform-reqs
+`
+
 4. Start docker containers:
 `
-npm start
+./vendor/bin/sail up
 `
 5. Create database and tables:
 `
-npm run db:migrate
+docker exec -it $(docker ps -q -f name=laravel.test-1) php artisan migrate
 `
 6. Populate the database with the initial data:
 `
-npm run db:seed
+docker exec -it $(docker ps -q -f name=laravel.test-1) php artisan db:seed
 `
 
 ## Graphql console
@@ -68,15 +70,25 @@ Should return:
 `
 cd frontend
 `
-2. Install dependencies:
+2. Build the docker image
 `
-npm i
+docker build . -t dockerized-react
 `
 3. Run the project
 `
+docker run -p 3000:3000 -d dockerized-react
+`
+## Run frontend locally
+Alternatively, you can run the frontend locally.
+You will need [node](https://nodejs.org/es/download/) 16 or greater installed.
+1. Install dependencies:
+`
+npm i
+`
+2. Run the project
+`
 npm start
 `
-
 ## Congrats
 Now you should be able to play some memotest on `localhost:3000`
 
