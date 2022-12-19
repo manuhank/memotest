@@ -10,17 +10,14 @@ use Illuminate\Support\Facades\DB;
 class Session extends Model
 {
     use HasFactory;
-    /**
-     * Write code on Method
-     *
-     * @return response()
-     */
+
     protected $fillable = [
         'retries',
         'memotestId',
         'numberOfPairs',
         'state'
     ];
+    
     public $timestamps = false;
     
 }

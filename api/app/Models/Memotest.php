@@ -9,18 +9,15 @@ class Memotest extends Model
 {
     use HasFactory;
 
-        /**
-     * Write code on Method
-     *
-     * @return response()
-     */
     protected $fillable = [
         'name' 
-    ];  
+    ]; 
+
     public $timestamps = false;
 
     public function images()
     {
         return $this->hasMany(Image::class, 'memotestId');
     }
+    
 }
