@@ -7,4 +7,11 @@ export class CardState {
     }
   }
 
-  export type revealedState = [number?, number?];
+  export type RevealedState = [number?, number?];
+
+  export type SavedGame = {
+    retries:number;
+    cards:CardState[];
+    solvedCards: number;
+    lastCardsRevealed: RevealedState;
+  }

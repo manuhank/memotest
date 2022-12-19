@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { CardState, revealedState } from "../types/states.types";
+import { CardState, RevealedState } from "../types/states.types";
 import { useQuery } from "@apollo/client";
 import { GET_MEMOTEST_BY_ID } from "../graphql/memotest.queries";
 import { getMemotestById } from "../types/api.types";
 import useSession from "./useSession";
+import { useSavedGame } from "./useSavedGame";
 
 export default function useMemoTest(id) {
   const [cards, setCards] = useState<CardState[]>();
-  const [lastCardsRevealed, setLastCardsRevealed] = useState<revealedState>([]);
+  const [lastCardsRevealed, setLastCardsRevealed] = useState<RevealedState>([]);
   const [solvedCards, setSolvedCards] = useState<number>(0);
   const [score, setScore] = useState<number>();
   const mismatchTimeout = useRef<NodeJS.Timeout>();
@@ -18,6 +19,7 @@ export default function useMemoTest(id) {
     error: memotestError,
   } = useQuery<getMemotestById>(GET_MEMOTEST_BY_ID(id));
   const { updateRetries, endSession, error: sessionError } = useSession(id);
+  const { savedGame, saveGame, clearSavedGame } = useSavedGame(id);
 
   const changeVisibility = (index: number) => {
     const newState = [...cards];
@@ -38,11 +40,25 @@ export default function useMemoTest(id) {
 
   const loadGame = () => {
     if (loadingMemotest) return;
-    const images = memotestData.memotest.images.map(({ url }) => url);
-    const initialState = [...images, ...images]
-      .map((val) => new CardState(val))
-      .sort(() => (Math.random() <= 0.5 ? -1 : 1));
-    setCards(initialState);
+    if (
+      savedGame &&
+      memotestData.memotest.images.length === savedGame.cards.length / 2
+    ) {
+      setCards(
+        savedGame.cards.map((card, index) => ({
+          ...card,
+          hidden: card.hidden || savedGame.lastCardsRevealed.includes(index),
+        }))
+      );
+      setSolvedCards(savedGame.solvedCards);
+      retries.current = savedGame.retries;
+    } else {
+      const images = memotestData.memotest.images.map(({ url }) => url);
+      const initialState = [...images, ...images]
+        .map((val) => new CardState(val))
+        .sort(() => (Math.random() <= 0.5 ? -1 : 1));
+      setCards(initialState);
+    }
   };
 
   const onCardClick = (index: number) => {
@@ -70,6 +86,7 @@ export default function useMemoTest(id) {
             () => setScore(Math.round((cards.length / retries.current) * 100)),
             1000
           );
+          clearSavedGame();
           endSession(retries.current);
         }
       } else {
@@ -80,7 +97,17 @@ export default function useMemoTest(id) {
     }
   };
 
-  useEffect(loadGame, [loadingMemotest, memotestData]);
+  useEffect(loadGame, [loadingMemotest, memotestData, savedGame]);
+  useEffect(
+    () =>
+      saveGame({
+        cards,
+        solvedCards,
+        retries: retries.current,
+        lastCardsRevealed,
+      }),
+    [cards, retries.current, lastCardsRevealed, solvedCards]
+  );
 
   return {
     name: memotestData?.memotest.name,
