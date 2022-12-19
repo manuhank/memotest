@@ -78,6 +78,7 @@ docker build . -t dockerized-react
 `
 docker run -p 3000:3000 -d dockerized-react
 `
+4. After a few seconds, open the app by navigating to localhost:3000
 ## Run frontend locally
 Alternatively, you can run the frontend locally.
 You will need [node](https://nodejs.org/es/download/) 16 or greater installed.

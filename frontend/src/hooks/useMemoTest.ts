@@ -86,7 +86,6 @@ export default function useMemoTest(id) {
             () => setScore(Math.round((cards.length / retries.current) * 100)),
             1000
           );
-          clearSavedGame();
           endSession(retries.current);
         }
       } else {
@@ -100,13 +99,15 @@ export default function useMemoTest(id) {
   useEffect(loadGame, [loadingMemotest, memotestData, savedGame]);
   useEffect(
     () =>
-      saveGame({
-        cards,
-        solvedCards,
-        retries: retries.current,
-        lastCardsRevealed,
-      }),
-    [cards, retries.current, lastCardsRevealed, solvedCards]
+      score !== undefined
+        ? clearSavedGame()
+        : saveGame({
+            cards,
+            solvedCards,
+            retries: retries.current,
+            lastCardsRevealed,
+          }),
+    [cards, retries.current, lastCardsRevealed, solvedCards, score]
   );
 
   return {
